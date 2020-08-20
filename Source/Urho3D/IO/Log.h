@@ -105,6 +105,8 @@ public:
 
     /// Write to the log. If logging level is higher than the level of the message, the message is ignored.
     static void Write(int level, const String& message);
+    /// Write formatted output to the log.
+    static void WriteFormat(int level, const char *formatString, ...);
     /// Write raw output to the log.
     static void WriteRaw(const String& message, bool error = false);
 
@@ -137,12 +139,12 @@ private:
 #define URHO3D_LOGWARNING(message) Urho3D::Log::Write(Urho3D::LOG_WARNING, message)
 #define URHO3D_LOGERROR(message) Urho3D::Log::Write(Urho3D::LOG_ERROR, message)
 #define URHO3D_LOGRAW(message) Urho3D::Log::WriteRaw(message)
-#define URHO3D_LOGTRACEF(format, ...) Urho3D::Log::Write(Urho3D::LOG_TRACE, Urho3D::ToString(format, ##__VA_ARGS__))
-#define URHO3D_LOGDEBUGF(format, ...) Urho3D::Log::Write(Urho3D::LOG_DEBUG, Urho3D::ToString(format, ##__VA_ARGS__))
-#define URHO3D_LOGINFOF(format, ...) Urho3D::Log::Write(Urho3D::LOG_INFO, Urho3D::ToString(format, ##__VA_ARGS__))
-#define URHO3D_LOGWARNINGF(format, ...) Urho3D::Log::Write(Urho3D::LOG_WARNING, Urho3D::ToString(format, ##__VA_ARGS__))
-#define URHO3D_LOGERRORF(format, ...) Urho3D::Log::Write(Urho3D::LOG_ERROR, Urho3D::ToString(format, ##__VA_ARGS__))
-#define URHO3D_LOGRAWF(format, ...) Urho3D::Log::WriteRaw(Urho3D::ToString(format, ##__VA_ARGS__))
+#define URHO3D_LOGTRACEF(format, ...) Urho3D::Log::WriteFormat(Urho3D::LOG_TRACE, format, ##__VA_ARGS__)
+#define URHO3D_LOGDEBUGF(format, ...) Urho3D::Log::WriteFormat(Urho3D::LOG_DEBUG, format, ##__VA_ARGS__)
+#define URHO3D_LOGINFOF(format, ...) Urho3D::Log::WriteFormat(Urho3D::LOG_INFO, format, ##__VA_ARGS__)
+#define URHO3D_LOGWARNINGF(format, ...) Urho3D::Log::WriteFormat(Urho3D::LOG_WARNING, format, ##__VA_ARGS__)
+#define URHO3D_LOGERRORF(format, ...) Urho3D::Log::WriteFormat(Urho3D::LOG_ERROR, format, ##__VA_ARGS__)
+#define URHO3D_LOGRAWF(format, ...) Urho3D::Log::WriteFormat(Urho3D::LOG_RAW, format, ##__VA_ARGS__)
 #else
 #define URHO3D_LOGTRACE(message) ((void)0)
 #define URHO3D_LOGDEBUG(message) ((void)0)

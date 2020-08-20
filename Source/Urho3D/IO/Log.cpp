@@ -205,6 +205,22 @@ void Log::Write(int level, const String& message)
     logInstance->inWrite_ = false;
 }
 
+void Log::WriteFormat(int level, const char *formatString, ...)
+{
+    // Avoid formatting the message if illegal level
+    if ((level < LOG_TRACE || level >= LOG_NONE) && level != LOG_RAW)
+        return;
+
+    String message;
+
+    va_list args;
+    va_start(args, formatString);
+    message.AppendWithFormatArgs(formatString, args);
+    va_end(args);
+
+    Log::Write(level, message);
+}
+
 void Log::WriteRaw(const String& message, bool error)
 {
     // If not in the main thread, store message for later processing
